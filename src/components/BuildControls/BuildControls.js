@@ -10,12 +10,21 @@ const controls = [
 ]
 
 
-export default function BuildControls() {
+export default function BuildControls(props) {
   return (
     <div className='BuildControls'>
+      <p>Total Price: <strong>{props.price.toFixed(2)}</strong></p>
       {controls.map(item =>(
-        <BuildControl key={item.label} label={item.label} />
+        <BuildControl 
+          key={item.label}
+          label={item.label}
+          added={() => props.ingredientAdded(item.type)}
+          removed={() => props.removeingredient(item.type)}
+          disabled ={props.disabledInfo[item.type]}
+        />
      ))}
+
+     <button onClick={props.ordered} disabled={!props.purchasable} className='OrderButton'>ORDER NOW</button>
     </div>
   )
 }
